@@ -1,0 +1,46 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+// Function to multiply a vector representing a large number by an integer
+void multiply(vector<int>& result, int x) {
+    int carry = 0;
+    // Multiply each digit of the result vector by x and handle carry
+    for (int i = 0; i < result.size(); ++i) {
+        int prod = result[i] * x + carry; // Multiply digit by x and add carry
+        result[i] = prod % 10; // Store the least significant digit of the product
+        carry = prod / 10; // Update carry for next iteration
+    }
+    // Add remaining carry digits to the result vector
+    while (carry) {
+        result.push_back(carry % 10);
+        carry /= 10;
+    }
+}
+
+// Function to calculate factorial of a number
+void factorial(int n) {
+    vector<int> result;
+    result.push_back(1); // Initialize result vector with 1 (representing 1!)
+
+    // Calculate factorial from 2 to n
+    for (int i = 2; i <= n; ++i)
+        multiply(result, i); // Multiply the result vector by each number from 2 to n
+
+    // Print the factorial
+    cout << "Factorial of " << n << " is: ";
+    for (int i = result.size() - 1; i >= 0; --i)
+        cout << result[i]; // Print digits of factorial in reverse order
+    cout << endl;
+}
+
+int main() {
+    int num;
+    cout << "Enter a number: ";
+    cin >> num;
+    
+    factorial(num); // Calculate and print factorial
+
+    return 0;
+}
