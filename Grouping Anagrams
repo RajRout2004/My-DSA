@@ -1,0 +1,25 @@
+#include <vector>
+#include <string>
+#include <unordered_map>
+#include <algorithm>
+
+class Solution {
+public:
+    std::vector<std::vector<std::string>> groupAnagrams(std::vector<std::string>& strs) {
+        int n = strs.size();
+        std::vector<std::vector<std::string>> result;
+        std::unordered_map<std::string, std::vector<std::string>> mp;
+
+        for (int i = 0; i < n; ++i) {
+            std::string temp = strs[i];
+            std::sort(temp.begin(), temp.end());
+            mp[temp].push_back(strs[i]);
+        }
+
+        for (const auto& it : mp) {
+            result.push_back(it.second);
+        }
+
+        return result;
+    }
+};
