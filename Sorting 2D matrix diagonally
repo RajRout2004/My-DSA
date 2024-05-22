@@ -1,0 +1,30 @@
+class Solution {
+public:
+    vector<vector<int>> diagonalSort(vector<vector<int>>& mat) {
+        int m = mat.size();
+        int n = mat[0].size();
+        unordered_map<int, vector<int>> diagonals;
+
+        // Store the elements of each diagonal in a map
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                diagonals[i - j].push_back(mat[i][j]);
+            }
+        }
+
+        // Sort each diagonal
+        for (auto& kv : diagonals) {
+            sort(kv.second.begin(), kv.second.end());
+        }
+
+        // Put sorted elements back into the matrix
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                mat[i][j] = diagonals[i - j].front();
+                diagonals[i - j].erase(diagonals[i - j].begin());
+            }
+        }
+
+        return mat;  // Ensure the function returns the sorted matrix
+    }
+};
