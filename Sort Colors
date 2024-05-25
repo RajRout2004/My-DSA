@@ -1,0 +1,28 @@
+#include <vector>
+#include <algorithm>  // For std::swap
+
+class Solution {
+public:
+    void sortColors(std::vector<int>& nums) {
+        int low = 0;  // Pointer for next position of 0
+        int mid = 0;  // Current element under consideration
+        int high = nums.size() - 1;  // Pointer for next position of 2
+
+        // Iterate through the array
+        while (mid <= high) {
+            if (nums[mid] == 0) {
+                // If the element is 0, swap it with the element at low pointer
+                std::swap(nums[low], nums[mid]);
+                low++;
+                mid++;
+            } else if (nums[mid] == 1) {
+                // If the element is 1, just move to the next element
+                mid++;
+            } else {
+                // If the element is 2, swap it with the element at high pointer
+                std::swap(nums[mid], nums[high]);
+                high--;
+            }
+        }
+    }
+};
