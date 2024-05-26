@@ -1,0 +1,40 @@
+class Solution {
+public:
+    vector<int> findOriginalArray(vector<int>& changed) {
+        int n = changed.size();
+        
+        // If the length of the array is odd, it can't be a doubled array
+        if (n % 2 != 0) return {};
+        
+        // Sort the array to ensure pairs (num, 2*num) can be found in sequence
+        sort(changed.begin(), changed.end());
+        
+        // Use a hash map to store the frequency of each number
+        unordered_map<int, int> frequencyMap;
+        for (int num : changed) {
+            frequencyMap[num]++;
+        }
+        
+        vector<int> result;
+        
+        // Traverse through each number in the sorted array
+        for (int num : changed) {
+            // If the current number's frequency is zero, skip it
+            if (frequencyMap[num] == 0) continue;
+            
+            int twice = num * 2;
+            
+            // If there's no corresponding double value, return an empty array
+            if (frequencyMap[twice] == 0) return {};
+            
+            // Add the current number to the result as part of the original array
+            result.push_back(num);
+            
+            // Decrement the count of the current number and its double in the frequency map
+            frequencyMap[num]--;
+            frequencyMap[twice]--;
+        }
+        
+        return result;
+    }
+};
